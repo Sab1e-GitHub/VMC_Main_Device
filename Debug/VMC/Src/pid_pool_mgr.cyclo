@@ -1,0 +1,9 @@
+../VMC/Src/pid_pool_mgr.c:22:10:Get_Available_RAM_Size	1
+../VMC/Src/pid_pool_mgr.c:26:6:Create_New_Effect_PB	4
+../VMC/Src/pid_pool_mgr.c:72:9:Set_Effect_Parameter	4
+../VMC/Src/pid_pool_mgr.c:102:9:Add_Constant_Force_PB	4
+../VMC/Src/pid_pool_mgr.c:117:9:Add_Ramp_Force_PB	4
+../VMC/Src/pid_pool_mgr.c:134:9:Add_Envelope_PB	4
+../VMC/Src/pid_pool_mgr.c:156:9:Add_Periodic_PB	4
+../VMC/Src/pid_pool_mgr.c:178:9:Add_Condition_PB	4
+../VMC/Src/pid_pool_mgr.c:448:9:Free_Effect_PB	4

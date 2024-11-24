@@ -1,0 +1,7 @@
+../VMC/Src/pid_synthesizer.c:33:6:Spring_PID_Init	1
+../VMC/Src/pid_synthesizer.c:42:9:PID_Compute	1
+../VMC/Src/pid_synthesizer.c:53:9:Is_PWM_Running	3
+../VMC/Src/pid_synthesizer.c:61:6:Clear_PWM	1
+../VMC/Src/pid_synthesizer.c:67:6:Set_PWM_Value	3
+../VMC/Src/pid_synthesizer.c:86:6:Update_Time_Setp	2
+../VMC/Src/pid_synthesizer.c:95:6:Synthesize_Effects_To_PWM	42
