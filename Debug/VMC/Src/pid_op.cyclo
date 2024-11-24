@@ -1,3 +1,0 @@
-../VMC/Src/pid_op.c:11:9:OP_Effect_Start	5
-../VMC/Src/pid_op.c:32:9:OP_Effect_Start_Solo	6
-../VMC/Src/pid_op.c:54:9:OP_Effect_Stop	2
