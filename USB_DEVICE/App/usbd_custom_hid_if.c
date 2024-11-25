@@ -93,13 +93,13 @@ uint8_t USB_Out_Buffer[USB_OUT_BUFFER_SIZE];
 __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DESC_SIZE] __ALIGN_END
 = {
 /* USER CODE BEGIN 0 */
+
 0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
 				0x09, 0x04,        // Usage (Joystick)
 				0xA1, 0x01,        // Collection (Application)
 				/*==================JoyStick Input Begin==================*/
-				/*==================Report ID=3 Begin==================*/
 				/*==================Input X==================*/
-				0x85, 0x03,        //   Report ID (3)
+				0x85, INPUT_REPORT_ID,        //   Report ID
 				0x05, 0x01, //   Usage Page (Generic Desktop Ctrls)
 				0xA1, 0x00,        //   Collection (Physical)
 				0x09, 0x30,        //     Usage (X)
@@ -129,18 +129,12 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x75, 0x01,        //   Report Size (1)
 				0x95, 0x20,      //   Report Count (32)		4B
 				0x81, 0x02, //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
-				/*==================Report ID=3 End==================*/
 				/*==================PID Begin==================*/
-				/*==================Report ID=1 Begin==================*/
-				/**
-				 * 下文就是主机发送数据给本设备，本设备需要接收的结构，必须把这个结构实现。
-				 * 本结构的所有Report ID均为1。
-				 */
 				/*==================Effect Types==================*/
 				0x05, 0x0F,        //   Usage Page (PID Page)
 				0x09, 0x21, //   Usage (0x21)			Set Effect Report
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x01,        //     Report ID (1)
+				0x85, SET_EFFECT_REPORT_ID,        //     Report ID
 				0x09, 0x22, //     Usage (0x22)		Effect Parameter Block Index
 				0x15, 0x01,        //     Logical Minimum (1)
 				0x25, 0x09,        //     Logical Maximum (9)
@@ -261,13 +255,11 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0xC0,              //     End Collection
 				0xC0,              //   End Collection
 				//2B
-				/*==================Report ID=1 End==================*/
 
-				/*==================Report ID=2 Begin==================*/
 				/*==================Set Envelope Report==================*/
 				0x09, 0x5A, //   Usage (0x5A)		Set Envelope Report
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x02,        //     Report ID (2)
+				0x85, ENVELOPE_REPORT_ID,        //     Report ID
 				0x09, 0x22, //     Usage (0x22)		Effect Parameter Block Index
 				0x15, 0x01,        //     Logical Minimum (1)
 				0x25, 0x09,        //     Logical Maximum (9)
@@ -295,13 +287,11 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x55, 0x00,        //     Unit Exponent (0)
 				0xC0,              //   End Collection
 				//2B
-				/*==================Report ID=2 End==================*/
 
-				/*==================Report ID=3 Begin==================*/
 				/*==================Set Condition Report==================*/
 				0x09, 0x5F, //   Usage (0x5F)			Set Condition Report
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x03,        //     Report ID (3)
+				0x85, CONDITION_REPORT_ID,        //     Report ID
 				0x09, 0x22, //     Usage (0x22)		Effect Parameter Block Index
 				0x15, 0x01,        //     Logical Minimum (1)
 				0x25, 0x09,        //     Logical Maximum (9)
@@ -339,13 +329,11 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x91, 0x02, //     Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
 				0xC0,              //   End Collection
 				//2B
-				/*==================Report ID=3 End==================*/
 
-				/*==================Report ID=4 Begin==================*/
 				/*==================Set Periodic Report==================*/
 				0x09, 0x6E, //   Usage (0x6E)			Set Periodic Report
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x04,        //     Report ID (4)
+				0x85, PERIODIC_REPORT_ID,        //     Report ID
 				0x09, 0x22, //     Usage (0x22)		Effect Parameter Block Index
 				0x15, 0x01,        //     Logical Minimum (1)
 				0x25, 0x09,        //     Logical Maximum (9)
@@ -389,13 +377,11 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x65, 0x00,        //     Unit (None)
 				0x55, 0x00,        //     Unit Exponent (0)
 				0xC0,              //   End Collection
-				/*==================Report ID=4 End==================*/
 
-				/*==================Report ID=5 Begin==================*/
 				/*==================Set Constant-Force Report==================*/
 				0x09, 0x73, //   Usage (0x73)			Set Constant-Force Report
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x05,        //     Report ID (5)
+				0x85, CONSTANT_FORCE_REPORT_ID,        //     Report ID
 				0x09, 0x22, //     Usage (0x22)		Effect Parameter Block Index
 				0x15, 0x01,        //     Logical Minimum (1)
 				0x25, 0x09,        //     Logical Maximum (9)
@@ -414,13 +400,11 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x91, 0x02, //     Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
 				//2B
 				0xC0,//   End Collection
-				/*==================Report ID=5 End==================*/
 
-				/*==================Report ID=6 Begin==================*/
 				/*==================Set Constant-Force Report==================*/
 				0x09, 0x74, //   Usage (0x74)			Set Ramp-Force Report
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x06,        //     Report ID (6)
+				0x85, RAMP_FROCE_REPORT_ID,        //     Report ID
 				0x09, 0x22, //     Usage (0x22)		Effect Parameter Block Index
 				0x15, 0x01,        //     Logical Minimum (1)
 				0x25, 0x09,        //     Logical Maximum (9)
@@ -446,17 +430,12 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x91, 0x02, //     Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
 				//2B
 				0xC0,//   End Collection
-				/*==================Report ID=6 End==================*/
 
 
-
-
-
-				/*==================Report ID=10 Begin==================*/
 				/*==================Effect Operation Report==================*/
 				0x09, 0x77, //   Usage (0x77)			Effect Operation Report
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x0A,        //     Report ID (10)
+				0x85, EFFECT_OPERATION_REPORT_ID,        //     Report ID
 				0x09, 0x22, //     Usage (0x22)		Effect Parameter Block Index
 				0x15, 0x01,        //     Logical Minimum (1)
 				0x25, 0x09,        //     Logical Maximum (9)
@@ -483,13 +462,11 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x91, 0x02, //     Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
 				//1B
 				0xC0,//   End Collection
-				/*==================Report ID=10 End==================*/
 
-				/*==================Report ID=67 Begin==================*/
 				/*==================Parameter Block Pools Report==================*/
 				0x09, 0x7F, //   Usage (0x7F)						//Parameter Block Pools Report, also named PID Pool Report
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x43,        //     Report ID (1)
+				0x85, PARAMETER_BLOCK_POOLS_REPORT_ID,        //     Report ID
 				0x09, 0x80, //     Usage (0x80)		RAM Pool Size
 				0x15, 0x00,        //     Logical Minimum (0)
 				0x26, 0xFF, 0xFF, //     Logical Maximum (65535)
@@ -524,13 +501,11 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0xB1, 0x02, //     Feature (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
 				//1B
 				0xC0,//   End Collection
-				/*==================Report ID=67 End==================*/
 
-				/*==================Report ID=2 Begin==================*/
 				/*==================PID State Report==================*/
 				0x09, 0x92,        //   Usage (0x92)
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x02,        //     Report ID (2)
+				0x85, PID_STATE_REPORT_ID,        //     Report ID
 				0x09, 0x22, //     Usage (0x22)		Effect Parameter Block Index
 				0x15, 0x01,        //     Logical Minimum (1)
 				0x25, 0x09,        //     Logical Maximum (9)
@@ -552,13 +527,11 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x81, 0x03, //     Input (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
 				//1B
 				0xC0,//   End Collection
-				/*==================Report ID=2 End==================*/
 
-				/*==================Report ID=11 Begin==================*/
 				/*==================PID Device Control==================*/
 				0x09, 0x96,        //   Usage (0x96)
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x0B,        //     Report ID (11)
+				0x85, PID_DEVICE_CONTROL_REPORT_ID,        //     Report ID
 				0x09, 0x97, //     Usage (0x97)		DC Enable Actuator
 				0x09, 0x98, //     Usage (0x98)		DC Disable Actuator
 				0x09, 0x99, //     Usage (0x99)		DC Stop All Effects
@@ -574,13 +547,11 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x91, 0x03, //     Output (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
 				//1B
 				0xC0,//   End Collection
-				/*==================Report ID=11 End==================*/
 
-				/*==================Report ID=68 Begin==================*/
 				/*==================Create New Effect Parameter Block Report==================*/
 				0x09, 0xAB, //   Usage (0xAB)		Create New Effect Parameter Block Report
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x44,        //     Report ID (68)
+				0x85, CREATE_NEW_EFFECT_PARAMETER_BLOCK_ID,        //     Report ID
 				0x09, 0x25, //     Usage (0x25)		Effect Type
 				0xA1, 0x02,        //     Collection (Logical)
 				0x09, 0x26, //       Usage (0x26)		ET Constant-Force
@@ -615,14 +586,12 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0xB1, 0x02, //     Feature (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
 				//1B
 				0xC0,//   End Collection
-				/*==================Report ID=68 End==================*/
 
-				/*==================Report ID=69 Begin==================*/
 				/*==================Effect Parameter Block Free Report==================*/
 				0x05, 0x0F,        //   Usage Page (PID Page)
 				0x09, 0x90, //   Usage (0x90)				Effect Parameter Block Free Report
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x45,        //     Report ID (69)
+				0x85, EFFECT_PARAMETER_BLOCK_FREE_REPORT_ID,        //     Report ID
 				0x09, 0x22, //     Usage (0x22)			Effect Parameter Block Index
 				0x15, 0x01,        //     Logical Minimum (1)
 				0x25, 0x09,        //     Logical Maximum (9)
@@ -633,13 +602,11 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x91, 0x02, //     Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
 				//1B
 				0xC0,//   End Collection
-				/*==================Report ID=69 End==================*/
 
-				/*==================Report ID=51 Begin==================*/
 				/*==================Effect Parameter Block Load Report==================*/
 				0x09, 0x89, //   Usage (0x89)		Effect Parameter Block Load Report
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x33,        //     Report ID (51)
+				0x85, EFFECT_PARAMETER_BLOCK_LOAD_REPORT_ID,        //     Report ID
 				0x09, 0x22, //     Usage (0x22)		Effect Parameter Block Index
 				0x15, 0x01,        //     Logical Minimum (1)
 				0x25, 0x09,        //     Logical Maximum (9)
@@ -674,13 +641,11 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0xB1, 0x02, //     Feature (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
 				//1B
 				0xC0,//   End Collection
-				/*==================Report ID=51 End==================*/
 
-				/*==================Report ID=64 Begin==================*/
 				/*==================Device Gain Report==================*/
 				0x09, 0x7D,        //   Usage (0x7D)
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x40,        //     Report ID (64)
+				0x85, DEVICE_GAIN_REPORT_ID,        //     Report ID
 				0x09, 0x7E, //     Usage (0x7E)		Device Gain
 				0x26, 0x10, 0x27, //     Logical Maximum (10000)
 				0x46, 0x10, 0x27, //     Physical Maximum (10000)
@@ -689,14 +654,13 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x91, 0x02, //     Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
 				//2B
 				0xC0,//   End Collection
-				/*==================Report ID=64 End==================*/
 
 				/*==================PID End==================*/
 
 				0x06, 0x00, 0xFF, // Usage Page (Vendor Defined 0xFF00)
 				0x09, 0x01,       //   Usage (Vendor Usage 0x01)
 				0xA1, 0x02,        //   Collection (Logical)
-				0x85, 0x64,        //     Report ID (100)
+				0x85, VMC_REPORT_ID,        //     Report ID
 				0x09, 0x01,            // Usage (0x01)
 				0x15, 0x00,            // Logical Minimum (0)
 				0x26, 0xFF, 0x00,      // Logical Maximum (255)
@@ -704,7 +668,7 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 				0x95, 0x05, // Report Count (5 bytes)  Bit0 = Command Bit1~4 = Parameters
 				0x91, 0x02, //     Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
 
-				0x85, 0x65,        //     Report ID (101)
+				0x85, VMC_RESPONDING_REPORT_ID,        //     Report ID
 				0x09, 0x01,        //     Usage (0x01)
 				0x95, 0x05, // Report Count (5 bytes)  Bit0 = Command Bit1~4 = Parameters
 				0xB1, 0x02, //     Feature (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)

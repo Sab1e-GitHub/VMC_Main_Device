@@ -8,23 +8,29 @@
 #ifndef PID_STRUCT_H_
 #define PID_STRUCT_H_
 
-#define SET_EFFECT_REPORT_ID                   0x01
-#define ENVELOPE_REPORT_ID                     0x02
-#define CONDITION_REPORT_ID                    0x03
-#define PERIODIC_REPORT_ID                     0x04
-#define CONSTANT_FORCE_REPORT_ID               0x05
-#define RAMP_FROCE_REPORT_ID 							0x06
-#define EFFECT_OPERATION_REPORT_ID             0x0A
-#define PARAMETER_BLOCK_POOLS_REPORT_ID        0x43
-#define PID_STATE_REPORT_ID                    0x02
-#define PID_DEVICE_CONTROL_REPORT_ID           0x0B
-#define CREATE_NEW_EFFECT_PARAMETER_BLOCK_ID   0x44
-#define EFFECT_PARAMETER_BLOCK_FREE_REPORT_ID  0x45
-#define EFFECT_PARAMETER_BLOCK_LOAD_REPORT_ID  0x33
-#define DEVICE_GAIN_REPORT_ID                  0x40
-#define INPUT_REPORT_ID                        0x03
-#define VMC_REPORT_ID							0x64
-#define VMC_RESPONDING_REPORT_ID				0x65
+#define INPUT_REPORT_ID                        0x01
+
+
+#define SET_EFFECT_REPORT_ID                   0x10
+#define ENVELOPE_REPORT_ID                     0x11
+#define CONDITION_REPORT_ID                    0x12
+#define PERIODIC_REPORT_ID                     0x13
+#define CONSTANT_FORCE_REPORT_ID               0x14
+#define RAMP_FROCE_REPORT_ID 							0x15
+
+
+#define EFFECT_OPERATION_REPORT_ID             0x30
+#define PARAMETER_BLOCK_POOLS_REPORT_ID        0x31
+#define PID_STATE_REPORT_ID                    0x32
+#define PID_DEVICE_CONTROL_REPORT_ID           0x33
+#define CREATE_NEW_EFFECT_PARAMETER_BLOCK_ID   0x34
+#define EFFECT_PARAMETER_BLOCK_FREE_REPORT_ID  0x35
+#define EFFECT_PARAMETER_BLOCK_LOAD_REPORT_ID  0x36
+#define DEVICE_GAIN_REPORT_ID                  0x37
+
+
+#define VMC_REPORT_ID							0x60
+#define VMC_RESPONDING_REPORT_ID				0x61
 
 typedef struct __attribute__((packed)) {
 	uint8_t id;		//ID=3

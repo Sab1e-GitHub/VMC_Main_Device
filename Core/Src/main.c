@@ -141,7 +141,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 		uint16_t raw_accelerator = adc_values[0];
 		uint16_t raw_brake = adc_values[1];
 		uint16_t raw_clutch = adc_values[2];
-		//TODO 从原始数据设置最大值最小值
 		// 处理加速踏板
 		if (raw_accelerator < Pedal_Limiter.accelerator_pedal_minimum) {
 			raw_accelerator = Pedal_Limiter.accelerator_pedal_minimum; // 限位到最小值

@@ -72,8 +72,8 @@ all: main-build
 main-build: VMC.elf secondary-outputs
 
 # Tool invocations
-VMC.elf VMC.map: $(OBJS) $(USER_OBJS) D:\WorkSpace\STM32CUBEIDE\VMC\STM32F103RCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "VMC.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"D:\WorkSpace\STM32CUBEIDE\VMC\STM32F103RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="VMC.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+VMC.elf VMC.map: $(OBJS) $(USER_OBJS) D:\WorkSpace\GitHubRepository\SubModule\VMC_Main_Device\STM32F103RCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "VMC.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"D:\WorkSpace\GitHubRepository\SubModule\VMC_Main_Device\STM32F103RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="VMC.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
