@@ -38,27 +38,29 @@ extern "C" {
 
 typedef enum {
 	cmd_unknown_command,
-	cmd_steering_wheel_set_center,
-	cmd_steering_wheel_set_rotation_range,
-	cmd_steering_wheel_encoder_set_pulse,
-	cmd_accelerator_pedal_set_maximum,
-	cmd_accelerator_pedal_set_minimum,
-	cmd_brake_pedal_set_maximum,
-	cmd_brake_pedal_set_minimum,
-	cmd_clutch_pedal_set_maximum,
-	cmd_clutch_pedal_set_minimum,
-	cmd_effect_gain_controller_set_spring_gain,
-	cmd_effect_gain_controller_set_damper_gain,
-	cmd_effect_gain_controller_set_friction_gain,
-	cmd_effect_gain_controller_set_inertia_gain,
-	cmd_effect_limiter_set_inertia_limiter,
-	cmd_effect_set_spring_kp,
-	cmd_effect_set_spring_ki,
-	cmd_effect_set_spring_kd,
-	cmd_steering_wheel_software_limiter_set_kp,
-	cmd_steering_wheel_software_limiter_set_ki,
-	cmd_steering_wheel_software_limiter_set_kd,
-	cmd_pwm_global_parameters_set_pwm_gain_multiple
+	cmd_steering_wheel_set_center,							// 设置当前角度为中心
+	cmd_steering_wheel_set_rotation_range,		// 设置方向盘最大旋转角度，正向+反向
+	cmd_steering_wheel_encoder_set_pulse,			// 设置编码器脉冲
+	cmd_accelerator_pedal_set_maximum,			// 设置当前值为加速踏板的最大值
+	cmd_accelerator_pedal_set_minimum,				// 设置当前值为加速踏板的最小值
+	cmd_brake_pedal_set_maximum,						// 设置当前值为刹车踏板的最大值
+	cmd_brake_pedal_set_minimum,						// 设置当前值为刹车踏板的最小值
+	cmd_clutch_pedal_set_maximum,						// 设置当前值为离合器踏板的最大值
+	cmd_clutch_pedal_set_minimum,						// 设置当前值为离合器踏板的最小值
+	cmd_effect_gain_controller_set_spring_gain,			// 设置力反馈效果 - Spring效果的增益
+	cmd_effect_gain_controller_set_damper_gain,		// 设置力反馈效果 - Damper效果的增益
+	cmd_effect_gain_controller_set_friction_gain,		// 设置力反馈效果 - Friction弹簧效果的增益
+	cmd_effect_gain_controller_set_inertia_gain,			// 设置力反馈效果 - Inertia效果的增益
+	cmd_effect_limiter_set_inertia_limiter,						// 设置力反馈效果 - Inertia效果的限位
+	cmd_effect_set_spring_kp,		// 设置力反馈效果 - Spring PID的Kp
+	cmd_effect_set_spring_ki,		// 设置力反馈效果 - Spring PID的Ki
+	cmd_effect_set_spring_kd,		// 设置力反馈效果 - Spring PID的Kd
+	cmd_steering_wheel_software_limiter_set_kp,	// 设置方向盘软限位 PID 的Kp
+	cmd_steering_wheel_software_limiter_set_ki,	// 设置方向盘软限位 PID 的Ki
+	cmd_steering_wheel_software_limiter_set_kd,	// 设置方向盘软限位 PID 的Kd
+	cmd_pwm_global_parameters_set_pwm_gain_multiple,		// 设置力反馈输出PWM的增益倍数
+	cmd_steering_wheel_software_limiter_set_vibration_feedback_enable,		// 设置方向盘软限位的震动反馈使能
+	cmd_steering_wheel_software_limiter_set_vibration_feedback_delay			// 设置方向盘软限位的震动反馈
 } VMC_CommandTypeDef;
 typedef enum {
 	resp_unknown,
@@ -70,6 +72,11 @@ typedef enum {
 	resp_clutch_pedal_minimum
 } VMC_RespondingTypeDef;
 
+typedef enum {
+	SL_Vibration_Feedback_OFF,
+	SL_Vibration_Feedback_CONSTANT,
+} SL_Vibration_FeedbackTypeDef;
+
 typedef struct {
 	uint16_t accelerator_pedal_maximum;
 	uint16_t accelerator_pedal_minimum;
@@ -78,6 +85,8 @@ typedef struct {
 	uint16_t clutch_pedal_set_maximum;
 	uint16_t clutch_pedal_set_minimum;
 } Pedal_Limiter_t;
+
+
 
 
 extern Pedal_Limiter_t Pedal_Limiter;

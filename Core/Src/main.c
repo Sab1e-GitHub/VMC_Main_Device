@@ -57,7 +57,13 @@ typedef struct {
 	float_t Kd;         // 微分增益
 	float_t previous_error; // 上一次误差
 	float_t integral;   // 积分值
-} SL_PID_Controller;
+} SL_PID_Controller_t;
+
+typedef struct {
+	uint8_t mode;		// 震动模式
+	uint16_t delay;		// 震动延迟
+	uint8_t coefficient;		// Ramp模式下的震动系数 Ramp模式下震动延迟=系数*角度
+} SL_Vibration_Feedback_t;
 
 /* USER CODE END PM */
 
@@ -80,12 +86,15 @@ uint32_t adc_values[3];
 uint8_t Current_Report_ID = INPUT_REPORT_ID;
 
 // PID控制器实例
-SL_PID_Controller sl_pid;
+SL_PID_Controller_t sl_pid;
 // 在合成效果之前初始化PID
 float_t SL_KP = 200.0f;
 float_t SL_KI = 1.0f;
 float_t SL_KD = 1.0f;
 uint32_t sl_pid_last_time = 0; // 获取开始时间
+
+SL_Vibration_Feedback_t SL_Vibration_Feedback = { .mode =
+				SL_Vibration_Feedback_CONSTANT, .delay = 200, };
 
 float_t angle_per_pulse = 0;
 // 初始化踏板限位
@@ -118,7 +127,7 @@ void StartUSBInputTask(void const *argument);
 /* USER CODE BEGIN 0 */
 
 // SL = Software  Limiter
-void SL_PID_Init(SL_PID_Controller *pid, float_t Kp, float_t Ki, float_t Kd) {
+void SL_PID_Init(SL_PID_Controller_t *pid, float_t Kp, float_t Ki, float_t Kd) {
 	pid->Kp = Kp;
 	pid->Ki = Ki;
 	pid->Kd = Kd;
@@ -127,7 +136,7 @@ void SL_PID_Init(SL_PID_Controller *pid, float_t Kp, float_t Ki, float_t Kd) {
 }
 
 //PID计算的是角度
-float_t SL_PID_Compute(SL_PID_Controller *pid, float_t setpoint,
+float_t SL_PID_Compute(SL_PID_Controller_t *pid, float_t setpoint,
 				float_t measured_value, float_t dt) {
 	float_t error = setpoint - measured_value;
 	pid->integral += error * dt;
@@ -199,7 +208,8 @@ uint32_t Read_Keys(void) {
 					&& (GPIOC->IDR & GPIO_PIN_4) && (GPIOC->IDR & GPIO_PIN_5) ?
 					(1 << 3) : 0;
 	// 发送示宽灯信号（条件：示宽灯开启，且未开启近光灯）
-	key_state |= (!(GPIOC->IDR & GPIO_PIN_4) && (GPIOA->IDR & GPIO_PIN_6) && (GPIOA->IDR & GPIO_PIN_7)) ? (1 << 4) : 0;
+	key_state |= (!(GPIOC->IDR & GPIO_PIN_4) && (GPIOA->IDR & GPIO_PIN_6)
+					&& (GPIOA->IDR & GPIO_PIN_7)) ? (1 << 4) : 0;
 
 	// 发送近光灯信号（条件：近光灯开启）
 	key_state |= (!(GPIOA->IDR & GPIO_PIN_6)) ? (1 << 5) : 0;
@@ -888,8 +898,10 @@ void StartUSBOutputTask(void const *argument) {
 												| (USB_Out_Buffer[3] << 8)));
 				break;
 			case RAMP_FROCE_REPORT_ID:
-				Add_Ramp_Force_PB((uint8_t) USB_Out_Buffer[1], (uint16_t) (USB_Out_Buffer[2]
-												| (USB_Out_Buffer[3] << 8)), (uint16_t) (USB_Out_Buffer[4]
+				Add_Ramp_Force_PB((uint8_t) USB_Out_Buffer[1],
+								(uint16_t) (USB_Out_Buffer[2]
+												| (USB_Out_Buffer[3] << 8)),
+								(uint16_t) (USB_Out_Buffer[4]
 												| (USB_Out_Buffer[5] << 8)));
 				break;
 			case EFFECT_OPERATION_REPORT_ID:
@@ -1079,7 +1091,14 @@ void StartUSBOutputTask(void const *argument) {
 					CMD_Set_float_from_buffer(USB_Out_Buffer, 2, 0.0f,
 					FLT_MAX, &PWM_Global_Parameters.pwm_gain_multiple);
 					break;
+				case cmd_steering_wheel_software_limiter_set_vibration_feedback_enable:
+					SL_Vibration_Feedback.mode = Parameter;
+					break;
 
+				case cmd_steering_wheel_software_limiter_set_vibration_feedback_delay:
+					CMD_Set_uint16((uint16_t*) &Parameter, 0U, UINT16_MAX,
+															&SL_Vibration_Feedback.delay);
+					break;
 				default:
 					// 其他命令
 					break;
@@ -1141,6 +1160,11 @@ void StartSynthesizerTask(void const *argument) {
 				}
 				Set_PWM_Value(pid_output);
 
+				if (SL_Vibration_Feedback.mode
+								== SL_Vibration_Feedback_CONSTANT) {
+					osDelay(SL_Vibration_Feedback.delay);
+					Set_PWM_Value(-pid_output);
+				}
 			} else {
 				//sl_pid_last_time = 0;
 
